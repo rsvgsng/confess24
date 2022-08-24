@@ -1,17 +1,47 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter } from "react-router-dom";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+import * as serviceWorker from './serviceWorker' 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+
+
+ setTimeout(function() { 
+  try {
+    if(sessionStorage.getItem("data")){
+      sessionStorage.clear();
+    }
+  
+  } catch (error) {
+    console.log("vaaaaa") 
+  }
+
+   }, 120000); // 2 minutes
+
+const options = {
+
+  position: positions.BOTTOM_CENTER,
+  timeout: 4000,
+  offset: '30px',
+  transition: transitions.SCALE
+}
+
+ReactDOM.render(
+
+
+  <BrowserRouter>
+  <AlertProvider template={AlertTemplate} {...options}>
     <App />
-  </React.StrictMode>
+
+    </AlertProvider>
+    </BrowserRouter>,
+
+
+      document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+serviceWorker.unregister()
